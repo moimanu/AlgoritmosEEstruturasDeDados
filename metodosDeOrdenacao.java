@@ -1,8 +1,35 @@
-package metodosDeOrdenacao;
+package atividadesaeds;
 
 import java.util.Scanner;
 
-public class MetodosDeOrdenacao {
+public class AtividadesAeds {
+    
+    private final static Scanner t = new Scanner(System.in);
+
+    
+    public static int[] gerarVetor(int tam){
+        int vetor[] = new int[tam];
+        System.out.println("Como voce quer o vetor?\n1 - Ordenado crescente\n2 - Ordenado descrescente\n3 - Aleatorio");
+        int opcao = t.nextInt();
+        
+        switch (opcao){
+            case 1 -> {
+                for(int i = 0; i < tam; i++){
+                    vetor[i] = i + 1;
+                }
+            }
+            case 2 -> {
+                for(int i = tam; i > 0; i--){
+                    vetor[tam - i] = i;
+                }
+            }
+            default -> {
+                System.err.println("Opcao fora da range determinada...");
+            }
+        }
+        
+        return vetor;
+    }
 
     public static void imprimirVetor(int vetor[], int tamanhoVetor) {
         for (int i = 0; i < tamanhoVetor; i++) {
@@ -11,6 +38,24 @@ public class MetodosDeOrdenacao {
         System.out.println();
     }
 
+    public static void bubbleSort(int vetor[], int tam){
+        int i, fim, aux;
+        for(fim = tam - 1; fim > 0; fim--){
+            for(i = 0; i < fim; i++) {
+                if(vetor[i] > vetor[i + 1]){
+                    aux = vetor[i];
+                    vetor[i] = vetor[i + 1];
+                    vetor[i + 1] = aux;
+                }
+            }
+        }
+        
+        //Imprimindo vetor ordenado:
+        System.out.print("Lista ordenada: ");
+        imprimirVetor(vetor, vetor.length);
+        System.out.println();
+    }
+    
     public static void insertionSort(int vetor[], int tam) {
         int i;
         int j = 1;
@@ -102,28 +147,20 @@ public class MetodosDeOrdenacao {
     }
 
     public static void main(String[] args) {
-        Scanner t = new Scanner(System.in);
         
         //Definindo tamanho do vetor
         System.out.print("Informe o tamanho do seu vetor: ");
         int tamanhoVetor = t.nextInt();
-        int vetor[] = new int[tamanhoVetor];
-        System.out.println();
-        
-        //Entrada de itens no vetor
-        System.out.println("Preencha o vetor: ");
-        for (int i = 0; i < tamanhoVetor; i++) {
-            vetor[i] = t.nextInt();
-        }
+        int vetor[] = gerarVetor(tamanhoVetor);
         System.out.println();
         
         //Imprimir vetor original
-        System.out.print("Lista desordenada: ");
+        System.out.print("Estado atual do vetor: ");
         imprimirVetor(vetor, tamanhoVetor);
         System.out.println();
 
         //Menu
-        System.out.println("Como quer ordenar?\n1 - InsertionSort\n2 - SelectionSort\n3 - MergeSort");
+        System.out.println("Como quer ordenar?\n1 - InsertionSort\n2 - SelectionSort\n3 - MergeSort\n4 - BubbleSort");
         int opcao = t.nextInt();
         System.out.println();
         switch (opcao) {
@@ -133,6 +170,8 @@ public class MetodosDeOrdenacao {
                 selectionSort(vetor, tamanhoVetor);
             case 3 ->
                 mergeSort(vetor, 0, tamanhoVetor - 1);
+            case 4 ->
+                bubbleSort(vetor, tamanhoVetor);
             default ->
                 System.out.println("Opcao invalida...");
         }
