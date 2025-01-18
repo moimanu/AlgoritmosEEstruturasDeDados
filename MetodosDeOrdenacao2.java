@@ -12,10 +12,8 @@ public class AtividadesAeds {
     private final static Scanner t = new Scanner(System.in);
     private final static Random r = new Random();
 
-    public static int[] gerarVetor(int tam){
+    public static int[] gerarVetor(int tam, int opcao){
         int vetor[] = new int[tam];
-        System.out.println("Como voce quer o vetor?\n1 - Ordenado crescente\n2 - Ordenado decrescente\n3 - Aleatorio");
-        int opcao = t.nextInt();
         
         switch (opcao){
             case 1 -> {
@@ -143,29 +141,44 @@ public class AtividadesAeds {
 
     public static void main(String[] args) throws IOException {
         
-        //Definindo tamanho do vetor
-        System.out.print("Informe o tamanho do seu vetor: ");
-        int tamanhoVetor = t.nextInt();
-        int vetor[] = gerarVetor(tamanhoVetor);
-        System.out.println();
-        
-        int vetorInsertion[] = vetor;
-        int vetorSelection[] = vetor;
-        int vetorMerge[] = vetor;
-        int vetorBubble[] = vetor;
+        int tamanhos[] = {100, 500, 1000, 5000, 20000};
         
         String arquivo = "dados.csv";
 
-        try(PrintWriter writer = new PrintWriter(new FileWriter(arquivo))){
-            writer.println("InsertionSort, " + insertionSort(vetorInsertion, tamanhoVetor));
-            writer.println("SelectionSort, " + selectionSort(vetorSelection, tamanhoVetor));
-            writer.println("MergeSort, " + mergeSort(vetorMerge, 0, tamanhoVetor - 1));
-            writer.println("BubbleSort, " + bubbleSort(vetorBubble, tamanhoVetor));
+        String cabecalho = "Metodo,";
+        String linhaInsertion = "InsertionSort,";
+        String linhaSelection = "SelectionSort,";
+        String linhaMerge = "MergeSort,";
+        String linhaBubble = "BubbleSort,";
+        
+        for(int tamanho : tamanhos){
+            //Definindo tamanho do vetor
+            int tamanhoVetor = tamanho;
+            int vetor[] = gerarVetor(tamanhoVetor, 3); //"3" significa aleatorio      //PAREI AQUI
+            System.out.println();
+
+            int vetorInsertion[] = vetor;
+            int vetorSelection[] = vetor;
+            int vetorMerge[] = vetor;
+            int vetorBubble[] = vetor;
             
-            File file = new File(arquivo);
-            System.out.println("Arquivo criado em: " + file.getAbsolutePath());
-        } catch(IOException e){
-            e.printStackTrace();
+            linhaInsertion += insertionSort(vetorInsertion, tamanhoVetor);
+            linhaSelection += selectionSort(vetorSelection, tamanhoVetor);
+            linhaMerge += mergeSort(vetorMerge, 0, tamanhoVetor - 1);
+            linhaBubble += bubbleSort(vetorBubble, tamanhoVetor);
+            
         }
+            
+            try(PrintWriter writer = new PrintWriter(new FileWriter(arquivo))){
+                writer.println("InsertionSort, " + insertionSort(vetorInsertion, tamanhoVetor));
+                writer.println("SelectionSort, " + selectionSort(vetorSelection, tamanhoVetor));
+                writer.println("MergeSort, " + mergeSort(vetorMerge, 0, tamanhoVetor - 1));
+                writer.println("BubbleSort, " + bubbleSort(vetorBubble, tamanhoVetor));
+
+                File file = new File(arquivo);
+                System.out.println("Arquivo criado em: " + file.getAbsolutePath());
+            } catch(IOException e){
+                e.printStackTrace();
+            }
     }
 }
