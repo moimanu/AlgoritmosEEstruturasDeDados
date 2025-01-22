@@ -141,8 +141,8 @@ public class AtividadesAeds {
 
     public static void main(String[] args) throws IOException {
         
-        int tamanhos[] = {100, 500, 1000, 5000, 20000};
-        
+        int tamanhos[] = {100, 500, 1000, 5000, 20000, 50000, 500000};
+
         String arquivo = "dados.csv";
 
         String cabecalho = "";
@@ -150,28 +150,32 @@ public class AtividadesAeds {
         String linhaSelection = "SelectionSort";
         String linhaMerge = "MergeSort";
         String linhaBubble = "BubbleSort";
-        
-        for(int tamanho : tamanhos){
-            //Definindo tamanho do vetor
-            int tamanhoVetor = tamanho;
-            int vetor[] = gerarVetor(tamanhoVetor, 3); //"3" significa aleatorio      //PAREI AQUI
-            System.out.println();
 
-            //Copiando os vetores
-            int vetorInsertion[] = vetor.clone();
-            int vetorSelection[] = vetor.clone();
-            int vetorMerge[] = vetor.clone();
-            int vetorBubble[] = vetor.clone();
-            
-            //Aumentando as colunas
-            cabecalho += ", Tam" + tamanho;
-            linhaInsertion += "," + insertionSort(vetorInsertion, tamanhoVetor);
-            linhaSelection += "," + selectionSort(vetorSelection, tamanhoVetor);
-            linhaMerge += "," + mergeSort(vetorMerge, 0, tamanhoVetor - 1);
-            linhaBubble += "," + bubbleSort(vetorBubble, tamanhoVetor);
+        for(int i = 1; i < 4; i++) {
+
+            for(int tamanho : tamanhos){
+                //Definindo tamanho do vetor
+                int tamanhoVetor = tamanho;
+                int vetor[] = gerarVetor(tamanhoVetor, i); //"3" significa aleatorio      //PAREI AQUI
+                System.out.println();
+
+                //Copiando os vetores
+                int vetorInsertion[] = vetor.clone();
+                int vetorSelection[] = vetor.clone();
+                int vetorMerge[] = vetor.clone();
+                int vetorBubble[] = vetor.clone();
+
+                //Aumentando as colunas
+                cabecalho += ", Tam" + tamanho;
+                linhaInsertion += "," + insertionSort(vetorInsertion, tamanhoVetor);
+                linhaSelection += "," + selectionSort(vetorSelection, tamanhoVetor);
+                linhaMerge += "," + mergeSort(vetorMerge, 0, tamanhoVetor - 1);
+                linhaBubble += "," + bubbleSort(vetorBubble, tamanhoVetor);
+            }
         }
             
         try(PrintWriter writer = new PrintWriter(new FileWriter(arquivo))){
+            writer.println();
             writer.println(cabecalho);
             writer.println(linhaInsertion);
             writer.println(linhaSelection);
