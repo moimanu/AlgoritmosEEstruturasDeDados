@@ -1,4 +1,4 @@
-package atividadesaeds;
+package metodosdeordenacao;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 import java.util.Random;
 import java.util.Scanner;
 
-public class AtividadesAeds {
+public class MetodosDeOrdenacao {
     
     private final static Scanner t = new Scanner(System.in);
     private final static Random r = new Random();
@@ -150,14 +150,22 @@ public class AtividadesAeds {
         String linhaSelection = "SelectionSort";
         String linhaMerge = "MergeSort";
         String linhaBubble = "BubbleSort";
-
+        String tipoVetor = "";
+        
         for(int i = 1; i < 4; i++) {
+
+            System.out.println();
+            switch(i){
+                case 1 -> tipoVetor = "Crescente";
+                case 2 -> tipoVetor = "Decrescente";
+                case 3 -> tipoVetor = "Aleatorio";
+            }
+            System.out.println("1) Executando ordenacao para vetor " + tipoVetor);
 
             for(int tamanho : tamanhos){
                 //Definindo tamanho do vetor
                 int tamanhoVetor = tamanho;
-                int vetor[] = gerarVetor(tamanhoVetor, i); //"3" significa aleatorio      //PAREI AQUI
-                System.out.println();
+                int vetor[] = gerarVetor(tamanhoVetor, i);
 
                 //Copiando os vetores
                 int vetorInsertion[] = vetor.clone();
@@ -165,12 +173,25 @@ public class AtividadesAeds {
                 int vetorMerge[] = vetor.clone();
                 int vetorBubble[] = vetor.clone();
 
-                //Aumentando as colunas
+                //Aumentando as colunas e imprimindo a execucao
                 cabecalho += ", Tam" + tamanho;
+                System.out.print("insertionSort --- tamV: " + tamanho);
                 linhaInsertion += "," + insertionSort(vetorInsertion, tamanhoVetor);
+                System.out.println(" -> Concluido");
+                
+                System.out.print("selectionSort --- tamV: " + tamanho);
                 linhaSelection += "," + selectionSort(vetorSelection, tamanhoVetor);
+                System.out.println(" -> Concluido");
+                
+                System.out.print("mergeSort ------- tamV: " + tamanho);
                 linhaMerge += "," + mergeSort(vetorMerge, 0, tamanhoVetor - 1);
+                System.out.println(" -> Concluido");
+                
+                System.out.print("bubbleSort ------ tamV: " + tamanho);
                 linhaBubble += "," + bubbleSort(vetorBubble, tamanhoVetor);
+                System.out.println(" -> Concluido");
+            
+                System.out.println();
             }
         }
             
